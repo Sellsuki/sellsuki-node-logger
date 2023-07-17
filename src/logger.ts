@@ -25,7 +25,7 @@ class SellsukiNodeLogger {
       formatters: {
         level: (label) => ({ level: label }),
       },
-      timestamp: pino.stdTimeFunctions.isoTime,
+      timestamp: false,
       base: null,
     }
     const loggerOptions: LoggerOptions = { ...defaultOptions, ...options }
@@ -66,10 +66,12 @@ class SellsukiNodeLogger {
 
   public logEvent(logType: string, message: string, event: EventLog): void {
     const callerLocation = this.getCallerLocation()
+    const timestamp = new Date().toISOString()
     const level = this.getLogLevel(logType)
     this.logger[level]({
       level,
       alert: 0,
+      timestamp,
       app_name: this.appName,
       version: this.version,
       caller: callerLocation,

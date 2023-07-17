@@ -1,6 +1,6 @@
 {
   "name": "sellsuki-node-logger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Logging wrapper for pino",
   "main": "dist/index.js",
   "private": false,
