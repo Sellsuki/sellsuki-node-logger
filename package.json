@@ -1,5 +1,5 @@
 {
-  "name": "sellsuki-node-logger",
+  "name": "@sellsuki/sellsuki-node-logger",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,11 +15,14 @@
     "@types/pino": "^7.0.5",
     "typescript": "^5.1.6"
   },
+  "files": [
+    "dist/"
+  ],
   "dependencies": {
     "pino": "^8.14.1"
   },
   "publishConfig": {
-    "@sellsuki:registry": "https://gitlab.sellsuki.com/api/v4/projects/374/packages/npm/"
+    "@sellsuki:registry": "https://gitlab.sellsuki.com/api/v4/projects/442/packages/npm/"
   }
 
 }
