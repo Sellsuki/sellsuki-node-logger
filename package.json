@@ -1,0 +1,25 @@
+{
+  "name": "sellsuki-node-logger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "@types/pino": "^7.0.5",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "pino": "^8.14.1"
+  },
+  "publishConfig": {
+    "@sellsuki:registry": "https://gitlab.sellsuki.com/api/v4/projects/374/packages/npm/"
+  }
+
+}
