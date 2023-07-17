@@ -1,10 +1,29 @@
 import pino, { Logger, LoggerOptions, Level } from "pino"
 import path from "path"
 
-interface SellsukiNodeLoggerOptions {
+export enum LogLevel {
+  INFO = "info",
+  ERROR = "error",
+  WARN = "warn",
+  DEBUG = "debug",
+}
+export interface SellsukiNodeLoggerOptions {
   appName: string
   version: string
   level?: Level
+}
+
+export interface TracerLog {
+  tracing_id: string
+  span_id: string
+  request_id: string
+}
+export interface EventLog {
+  entity: string
+  action: string
+  result: string
+  reference_id: string
+  data: string
 }
 
 class SellsukiNodeLogger {
@@ -12,11 +31,11 @@ class SellsukiNodeLogger {
   private appName: string
   private version: string
 
-  private logLevels: Record<string, Level> = {
-    info: "info",
-    error: "error",
-    warn: "warn",
-    debug: "debug",
+  private logLevels: Record<LogLevel, Level> = {
+    [LogLevel.INFO]: "info",
+    [LogLevel.ERROR]: "error",
+    [LogLevel.WARN]: "warn",
+    [LogLevel.DEBUG]: "debug",
   }
 
   constructor(options: SellsukiNodeLoggerOptions) {
@@ -34,7 +53,7 @@ class SellsukiNodeLogger {
     this.version = options.version
   }
 
-  private getLogLevel(logType: string): Level {
+  private getLogLevel(logType: LogLevel): Level {
     return this.logLevels[logType] || "info"
   }
 
@@ -64,7 +83,12 @@ class SellsukiNodeLogger {
     return undefined
   }
 
-  public logEvent(logType: string, message: string, event: EventLog): void {
+  public logEvent(
+    logType: LogLevel,
+    message: string,
+    event: EventLog,
+    tracer?: TracerLog
+  ): void {
     const callerLocation = this.getCallerLocation()
     const timestamp = new Date().toISOString()
     const level = this.getLogLevel(logType)
@@ -78,29 +102,17 @@ class SellsukiNodeLogger {
       message,
       log_type: "event",
       data: {
-        tracing: {
-          tracing_id: "",
-          span_id: "",
-          request_id: "x3sdd-dac13-ccasda",
-        },
-        event: {
-          entity: event.entity,
-          action: event.action,
-          result: event.result,
-          reference_id: event.reference_id,
-          data: event.data,
-        },
+        tracing: tracer
+          ? tracer
+          : {
+              tracing_id: "",
+              span_id: "",
+              request_id: "",
+            },
+        event,
       },
     })
   }
-}
-
-export interface EventLog {
-  entity: string
-  action: string
-  result: string
-  reference_id: string
-  data: string
 }
 
 export default SellsukiNodeLogger

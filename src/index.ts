@@ -1,2 +1,6 @@
-export { default as SLogger } from "./logger"
-export { EventLog } from "./logger"
+export {
+  default as SLogger,
+  LogLevel,
+  EventLog,
+  SellsukiNodeLoggerOptions as SLoggerOptions,
+} from "./logger"
